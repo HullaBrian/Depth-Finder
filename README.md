@@ -9,5 +9,5 @@ A simple algorithm is used in order to determine if a URL is possibly a maliciou
   1. Input the URL of the malicious link in question
   2. Input a known, safe URL
   3. Phishing-Detective will pull information about the URL in question
-  4. Phishing-Detective will compare the data of the URL in question with the known safe URL
+  4. Phishing-Detective will compare the data of the URL in question with the data of the known safe URL
   5. Phishing-Detective will give you an evaluation based on the data found
