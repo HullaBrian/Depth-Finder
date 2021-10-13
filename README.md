@@ -11,3 +11,13 @@ A simple algorithm is used in order to determine if a URL is possibly a maliciou
   3. Phishing-Detective will pull information about the URL in question
   4. Phishing-Detective will compare the data of the URL in question with the data of the known safe URL
   5. Phishing-Detective will give you an evaluation based on the data found
+
+## Use
+for a list of usable arguments type 
+```
+pd -h
+```
+or
+```
+pd --help
+```
