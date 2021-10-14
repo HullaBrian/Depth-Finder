@@ -2,6 +2,7 @@ import packageManager  # makes sure all necessary packages are installed
 import click  # imports click libarary
 
 # LOOK AT DISCORD
+#THERE IS VERY IMPORTANT INFORMATION THAT I SENT YOU ON DISCORD!!!!!
 
 @click.group()
 @click.option('--set', default="")
