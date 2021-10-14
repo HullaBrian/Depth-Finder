@@ -15,9 +15,5 @@ A simple algorithm is used in order to determine if a URL is possibly a maliciou
 ## Use
 for a list of usable arguments type 
 ```
-pd -h
-```
-or
-```
-pd --help
+pd> help
 ```
