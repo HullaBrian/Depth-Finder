@@ -4,7 +4,9 @@ try:
     import art  # Tries to import
     print("Done!")
 except ModuleNotFoundError:
-    click.echo("Could not find required library.")
-    click.echo("Installing required libraries...", nl=False)
+    print("Could not find required library.")
+    print("Installing required libraries...")
     os.system("pip install -U art")  # Installs click if not already installed
-    click.echo("Done!")
+    print("Done!")
+    print("Restart PhishDetective")
+    exit()  # we need to exit here or the code will die anyway
