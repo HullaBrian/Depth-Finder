@@ -3,21 +3,32 @@ import click  # imports click libarary
 
 
 @click.group()
-@click.option('--debug/--no-debug', default=False)
-@click.pass_context
-def cli(ctx, debug):
-    # ensure that ctx.obj exists and is a dict (in case `cli()` is called
-    # by means other than the `if` block below)
-    ctx.ensure_object(dict)
-
-    ctx.obj['DEBUG'] = debug
+@click.option('--set', default="")
+def set(command):
+    print("Set received command" + command)
+    pass
 
 
-@cli.command()
-@click.pass_context
-def sync(ctx):
-    click.echo('Debug is %s' % (ctx.obj['DEBUG'] and 'on' or 'off'))
+@set.group()
+@click.option("--hostname", default="", help="sets the hostname")
+@click.argument("hostname", default="")
+def sethostname(hostname):
+    click.echo("Set host name to " + hostname)
 
 
 if __name__ == '__main__':
-    cli(obj={})
+    set()
+
+
+"""
+Current Error:
+    Input: >python main.py --set --hostname https://google.com/
+    Error message:
+    
+        Verifying required libraries...Done!
+        Usage: main.py [OPTIONS] COMMAND [ARGS]...
+        Try 'main.py --help' for help.
+        
+        Error: No such command 'https://google.com/'.
+        
+"""
