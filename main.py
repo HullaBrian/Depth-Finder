@@ -1,5 +1,4 @@
 import packageManager  # makes sure all necessary packages are installed
-
 import art
 
 art.tprint("Phishing-Detective")
