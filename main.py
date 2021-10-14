@@ -24,7 +24,7 @@ main()
 import packageManager  # makes sure all necessary packages are installed
 import art
 
-art.tprint("Phishing-Detective")
+art.tprint("Phishing-Detective") #we can discuss fonts later, I say we get some of the primary code done before
 
 
 def main():
