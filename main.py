@@ -32,6 +32,8 @@ def main():
     # To add a command, simply add a command(command title, required titles) object to commands
     commandlst = []
     commandlst.append(setHost())
+    commandlst.append(isDomainRegistered())
+    commandlst.append(getDomainInfo())
     commandlst.append(hlp(commandlst))  # Put the help addition at the end of adding commands to properly generate the help command
 
     while True:  # Loops until exits
