@@ -27,37 +27,41 @@ import art
 art.tprint("Phishing-Detective") #we can discuss fonts later, I say we get some of the primary code done before
 
 
+def help():
+    print(" ")
+    print("Commands")
+    print("=============")
+    print("\"help\" or \"?\" ---- prints this help menu")
+    print("\"set target [URL]\" ---- sets target URL for data gathering")
+    print(" ")
+    main()
+
+
 def main():
-
-
     prompt = "pd> "
-
     print(prompt, end="")
 
-
     command = input().split(" ")
-    cmd = command[0]
-    subcmd = command[1]
-    arg = command[2]
+    if len(command) >= 3:
+        cmd = command[0]
+        subcmd = command[1]
+        arg = command[2]
+    elif len(command) >= 2:
+        cmd = command[0]
+        subcmd = command[1]
+    elif len(command) >= 1:
+        cmd = command[0]
 
     if cmd == "set" and subcmd == "target":
         hostname = arg
-
         print("hostname ===> "+ arg)
 
-
-    if cmd[0] == "help" or cmd[0] == "?":
-        print(" ")
-        print("Commands")
-        print("=============")
-        print("\"help\" or \"?\" ---- prints this help menu")
-        print("\"set target [URL]\" ---- sets target URL for data gathering")
-        print(" ")
-        main()
-
-
+    if cmd == "help" or cmd == "?":
+        print("EEE")
+        help()
 
     if cmd == "exit":
         exit()
+
 
 main()
