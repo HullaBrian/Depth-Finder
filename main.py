@@ -29,18 +29,35 @@ art.tprint("Phishing-Detective") #we can discuss fonts later, I say we get some 
 
 def main():
 
-    prompt = "pd> "
-    i = input(prompt)
 
-    if i == "help" or i == "?":
+    prompt = "pd> "
+
+    print(prompt, end="")
+
+
+    command = input().split(" ")
+    cmd = command[0]
+    subcmd = command[1]
+    arg = command[2]
+
+    if cmd == "set" and subcmd == "target":
+        hostname = arg
+
+        print("hostname ===> "+ arg)
+
+
+    if cmd[0] == "help" or cmd[0] == "?":
         print(" ")
         print("Commands")
         print("=============")
         print("\"help\" or \"?\" ---- prints this help menu")
+        print("\"set target [URL]\" ---- sets target URL for data gathering")
         print(" ")
         main()
 
-    if i == "exit":
+
+
+    if cmd == "exit":
         exit()
 
 main()
