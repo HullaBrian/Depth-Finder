@@ -8,5 +8,5 @@ except ModuleNotFoundError:
     print("Installing required libraries...")
     os.system("pip install -U art")  # Installs art if not already installed
     print("Done!")
-    print("Restart PhishDetective")
+    print("Restart Phish Detective")
     exit()  # we need to exit here or the code will die anyway
