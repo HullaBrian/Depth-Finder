@@ -2,7 +2,7 @@ import os
 
 
 missingLibrary = False
-print("Verifying required libraries...", end="")
+print("Verifying required libraries...")
 try:
     import art  # Tries to import
 except ModuleNotFoundError:

@@ -1,8 +1,6 @@
-import socket
-
-import urllib3.exceptions
-
 import packageManager  # makes sure all necessary packages are installed
+import socket
+import urllib3.exceptions
 from command import command
 import art
 
@@ -55,7 +53,7 @@ class hlp(command):
                 setCommands.append(command)
         for command in setCommands:
             print("\t" + str(command.title), end="")
-            for x in range(maxCommandNameLength - len("Command") + 3):
+            for x in range(max(maxCommandNameLength, len("Command")) - len(command.title) + 3):
                 print(" ", end="")
             print(str(command.hlp))
 
@@ -99,7 +97,7 @@ class hlp(command):
                 setCommands.append(command)
         for command in setCommands:
             print("\t" + str(command.title), end="")
-            for x in range(maxCommandNameLength - len("Command") + 3):
+            for x in range(max(maxCommandNameLength, len("Command")) - len(command.title) + 3):
                 print(" ", end="")
             print(str(command.hlp))
 
@@ -171,10 +169,8 @@ class sslverify(command):
             print("Could not resolve url \"" + url + "\" to host")
 
 
-art.tprint("Phishing-Detective")  # we can discuss fonts later, I say we get some of the primary code done before
-
-
 def main():
+    art.tprint("Phishing-Detective")  # we can discuss fonts later, I say we get some of the primary code done before
     # To add a command, simply add a command(command title, required titles) object to commands
     global commands
     commands = []
