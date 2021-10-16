@@ -24,7 +24,7 @@ class hlp(command):
 
 class setHost(command):
     def __init__(self):
-        super().__init__("set host", ["set", "host"], hlp="Sets the hostname to a given url")
+        super().__init__("set host", ["set", "host"], True, hlp="Sets the hostname to a given url")
         self.hlp = "Sets the hostname to a given url"
 
     def execute(self, name):
@@ -33,37 +33,16 @@ class setHost(command):
         print("Set host name to " + hostname)
 
 
-class isDomainRegistered(command):
+class getInfo(command):
     def __init__(self):
-        super().__init__("isDomainRegistered", ["isDomainRegistered"], hlp="Checks if the current domain name set is a valid, registered domain")
-        self.hlp = "Checks if the current domain name set is a valid, registered domain"
-
-    def execute(self, filler):
-        if hostname == "" or hostname == "isDomainRegistered":
-            print("Missing required parameter \"hostname\"")
-            return
-        import whois
-        print("Verifying domain...", end="")
-        try:
-            if whois.whois(hostname).domain_name:
-                print("Done!\nDomain " + hostname + " is registered.")
-            else:
-                print("Done!\nDomain " + hostname + " is not registered.")
-        except Exception:
-            print("ERROR! Domain is not valid!")
-            return
-
-
-class getDomainInfo(command):
-    def __init__(self):
-        super().__init__("getDomainInfo", ["getDomainInfo"], hlp="give the relevant information on a given hostname")
+        super().__init__("get info", ["get", "info"], hlp="give the relevant information on a given hostname")
         self.hlp = "give the relevant information on a given hostname"
 
-    def execute(self, hostName):
+    def execute(self, filler):
         info = []
         import whois
         try:
-            whois_info = whois.whois(hostName)
+            whois_info = whois.whois(hostname)
         except Exception:
             print("Invalid domain")
             return
@@ -91,15 +70,14 @@ def main():
     global commands
     commands = []
     commands.append(setHost())
-    commands.append(isDomainRegistered())
-    commands.append(getDomainInfo())
+    commands.append(getInfo())
     commands.append(hlp())  # Put the help addition at the end of adding commands to properly generate the help command
 
     while True:  # Loops until exits
         prompt = "pd> "
         print(prompt, end="")
 
-        command = input().split(" ")
+        command = input().lower().split(" ")
         if len(command) >= 3:
             cmd = command[0]
             subcmd = command[1]

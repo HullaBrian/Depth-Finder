@@ -4,9 +4,10 @@ class command(object):  # To make a command a child of this, use class <command 
     """
     An object that simplifies the command making progress
     """
-    def __init__(self, title, requiredCommands, hlp=""):
+    def __init__(self, title, requiredCommands, requiresArgument=False, hlp=""):
         self.title = title
         self.requiredCommands = requiredCommands
+        self.requiresArgument = requiresArgument
         self.help = hlp
 
     def matchesParams(self, params):
@@ -14,7 +15,11 @@ class command(object):  # To make a command a child of this, use class <command 
         A method for validating that the parameters given match the required parameters
         """
         count = 0
-        if len(params) >= len(self.requiredCommands):
+        if len(params) >= len(self.requiredCommands) and not self.requiresArgument:
+            for x in range(len(self.requiredCommands)):
+                if self.requiredCommands[x] == params[x]:
+                    count += 1
+        if len(params) - 1 >= len(self.requiredCommands) and self.requiresArgument:
             for x in range(len(self.requiredCommands)):
                 if self.requiredCommands[x] == params[x]:
                     count += 1
