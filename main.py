@@ -110,7 +110,7 @@ class setHost(command):
     def execute(self, name):
         global hostname
         hostname = name
-        print("Set host name to " + hostname)
+        print("hostname ==> " + hostname)
 
 
 class setUrl(command):
@@ -121,7 +121,7 @@ class setUrl(command):
     def execute(self, data):
         global url
         url = data
-        print("Set url to " + url)
+        print("url ==>" + url)
 
 
 class getInfo(command):
