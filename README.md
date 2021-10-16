@@ -1,6 +1,6 @@
 # Phishing-Detective
 
-Phishing-Detective is a command line application for Windows 10 built to detect a phishing site from two url's
+Phishing-Detective is a command line application for Windows 10 built to detect a phishing site from one(or two) url's
 
 ## How it works
 A simple algorithm is used in order to determine if a URL is possibly a malicious link

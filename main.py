@@ -10,16 +10,92 @@ class hlp(command):
         super().__init__("help", ["help"])
 
     def execute(self, filler):
-        print(" ")
-        print("Commands")
-        print("=============")
-        print("\"help\" or \"?\" ---- prints help menu")
-        for command in commands[0:-1]:
-            print(f"\"{command.title} [", end="")
-            for param in command.requiredCommands[:-1]:
-                print(param + ", ", end="")
-            print(command.requiredCommands[-1] + "] ---- " + str(command.hlp))
-        print(" ")
+        print("\nhelp   Displays this menu")
+        print("\"Set\" Commands")
+        for x in range(len("\"Set\" Commands")):
+            print("-", end="")
+        print()
+
+        print("\tCommand", end="")
+        maxCommandNameLength = 0
+        for command in commands:
+            if len(command.title) > maxCommandNameLength:
+                maxCommandNameLength = len(command.title)
+        if maxCommandNameLength >= len("Command"):
+            for x in range(maxCommandNameLength - len("Command") + 3):
+                print(" ", end="")
+        else:
+            for x in range(len("Command") + 3):
+                print(" ", end="")
+
+        print("Description")
+
+        print("\t", end="")
+        for x in range(len("Command")):
+            print("-", end="")
+        if maxCommandNameLength >= len("Command"):
+            for x in range(maxCommandNameLength - len("Command") + 3):
+                print(" ", end="")
+        else:
+            for x in range(len("Command") + 3):
+                print(" ", end="")
+        for x in range(len("Description")):
+            print("-", end="")
+        print()
+
+        setCommands = []
+        for command in commands:
+            if command.requiredCommands[0] == "set":
+                setCommands.append(command)
+        for command in setCommands:
+            print("\t" + str(command.title), end="")
+            for x in range(maxCommandNameLength - len("Command") + 3):
+                print(" ", end="")
+            print(str(command.hlp))
+
+        # Section seperator
+
+        print("\n\"Get\" Commands")
+        for x in range(len("\"Get\" Commands")):
+            print("-", end="")
+        print()
+
+        print("\tCommand", end="")
+        maxCommandNameLength = 0
+        for command in commands:
+            if len(command.title) > maxCommandNameLength:
+                maxCommandNameLength = len(command.title)
+        if maxCommandNameLength >= len("Command"):
+            for x in range(maxCommandNameLength - len("Command") + 3):
+                print(" ", end="")
+        else:
+            for x in range(len("Command") + 3):
+                print(" ", end="")
+
+        print("Description")
+
+        print("\t", end="")
+        for x in range(len("Command")):
+            print("-", end="")
+        if maxCommandNameLength >= len("Command"):
+            for x in range(maxCommandNameLength - len("Command") + 3):
+                print(" ", end="")
+        else:
+            for x in range(len("Command") + 3):
+                print(" ", end="")
+        for x in range(len("Description")):
+            print("-", end="")
+        print()
+
+        setCommands = []
+        for command in commands:
+            if command.requiredCommands[0] == "get":
+                setCommands.append(command)
+        for command in setCommands:
+            print("\t" + str(command.title), end="")
+            for x in range(maxCommandNameLength - len("Command") + 3):
+                print(" ", end="")
+            print(str(command.hlp))
 
 
 class setHost(command):
