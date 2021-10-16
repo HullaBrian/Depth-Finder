@@ -4,7 +4,6 @@ import urllib3.exceptions
 from command import command
 import art
 
-global hostname
 global url
 global commands
 
@@ -102,19 +101,6 @@ class hlp(command):
             print(str(command.hlp))
 
 
-class setHost(command):
-    def __init__(self):
-        super().__init__("set host", ["set", "host"], True, hlp="Sets the hostname to a given url")
-        self.hlp = "Sets the hostname to a given url"
-
-    def execute(self, name):
-        global hostname
-        hostname = name
-        print(" ")
-        print("hostname ==> " + hostname)
-        print(" ")
-
-
 class setUrl(command):
     def __init__(self):
         super(setUrl, self).__init__("set url", ["set", "url"], True, hlp="sets the url to a given url")
@@ -124,22 +110,22 @@ class setUrl(command):
         global url
         url = data
         print(" ")
-        print("url ==>" + url)
+        print("url ==> " + url)
         print(" ")
 
 
 class getInfo(command):
     def __init__(self):
-        super().__init__("get info", ["get", "info"], hlp="gets the relevant information on a given hostname")
-        self.hlp = "give the relevant information on a given hostname"
+        super().__init__("get info", ["get", "info"], hlp="gets the relevant information on a given url")
+        self.hlp = "give the relevant information on a given url"
 
     def execute(self, filler):
         info = []
         import whois
         try:
-            whois_info = whois.whois(hostname)
+            whois_info = whois.whois(url)
         except Exception:
-            print("Invalid domain")
+            print("Invalid url")
             return
         info.append(bool(whois_info.domain_name))
         info.append(whois_info.registrar)
@@ -156,8 +142,8 @@ class getInfo(command):
 
 class sslverify(command):
     def __init__(self):
-        super().__init__("get sslverify", ["get", "sslverify"], hlp="verifies the SSL certificate of the hostname")
-        self.hlp = "verifies the SSL certificate of the hostname"
+        super().__init__("get sslverify", ["get", "sslverify"], hlp="verifies the SSL certificate of the url")
+        self.hlp = "verifies the SSL certificate of the url"
 
     def execute(self, filler):
         import requests
@@ -171,6 +157,8 @@ class sslverify(command):
             print("Invalid url \"" + url + "\"")
         except (socket.gaierror, urllib3.exceptions.NewConnectionError, urllib3.exceptions.MaxRetryError, requests.exceptions.ConnectionError):
             print("Could not resolve url \"" + url + "\" to host")
+        except requests.exceptions.MissingSchema:
+            print("Invalid url \"" + url + "\"")
 
 
 def main():
@@ -178,7 +166,6 @@ def main():
     # To add a command, simply add a command(command title, required titles) object to commands
     global commands
     commands = []
-    commands.append(setHost())
     commands.append(setUrl())
     commands.append(getInfo())
     commands.append(sslverify())
@@ -207,12 +194,6 @@ def main():
             break
         executedCommand = False
         if len(params) == 1:
-            if params[0] == "hostname":
-                try:
-                    print("Current host name is \"" + hostname + "\"")
-                except NameError:
-                    print("No host name is set")
-                executedCommand = True
             if params[0] == "url":
                 try:
                     print("Current url is \"" + url + "\"")
