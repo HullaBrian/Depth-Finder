@@ -1,7 +1,13 @@
-from command import command
+import socket
 
+import urllib3.exceptions
+
+import packageManager  # makes sure all necessary packages are installed
+from command import command
+import art
 
 global hostname
+global url
 global commands
 
 
@@ -109,9 +115,20 @@ class setHost(command):
         print("Set host name to " + hostname)
 
 
+class setUrl(command):
+    def __init__(self):
+        super(setUrl, self).__init__("set url", ["set", "url"], True, hlp="sets the url to a given url")
+        self.hlp = "sets the url to a given url"
+
+    def execute(self, data):
+        global url
+        url = data
+        print("Set url to " + url)
+
+
 class getInfo(command):
     def __init__(self):
-        super().__init__("get info", ["get", "info"], hlp="give the relevant information on a given hostname")
+        super().__init__("get info", ["get", "info"], hlp="gets the relevant information on a given hostname")
         self.hlp = "give the relevant information on a given hostname"
 
     def execute(self, filler):
@@ -135,8 +152,24 @@ class getInfo(command):
         print("Other info: " + str(info[4]))
 
 
-import packageManager  # makes sure all necessary packages are installed
-import art
+class sslverify(command):
+    def __init__(self):
+        super().__init__("get sslverify", ["get", "sslverify"], hlp="verifies the SSL certificate of the hostname")
+        self.hlp = "verifies the SSL certificate of the hostname"
+
+    def execute(self, filler):
+        import requests
+        try:
+            response = str(requests.get(url))
+            if "SSL: CERTIFICATE_VERIFY_FAILED" in response:
+                print("url \"" + url + "\" has an invalid SSL certificate")
+            else:
+                print("url \"" + url + "\" has a valid SSL certificate")
+        except requests.exceptions.InvalidURL:
+            print("Invalid url \"" + url + "\"")
+        except (socket.gaierror, urllib3.exceptions.NewConnectionError, urllib3.exceptions.MaxRetryError, requests.exceptions.ConnectionError):
+            print("Could not resolve url \"" + url + "\" to host")
+
 
 art.tprint("Phishing-Detective")  # we can discuss fonts later, I say we get some of the primary code done before
 
@@ -146,7 +179,9 @@ def main():
     global commands
     commands = []
     commands.append(setHost())
+    commands.append(setUrl())
     commands.append(getInfo())
+    commands.append(sslverify())
     commands.append(hlp())  # Put the help addition at the end of adding commands to properly generate the help command
 
     while True:  # Loops until exits
@@ -177,6 +212,12 @@ def main():
                     print("Current host name is \"" + hostname + "\"")
                 except NameError:
                     print("No host name is set")
+                executedCommand = True
+            if params[0] == "url":
+                try:
+                    print("Current url is \"" + url + "\"")
+                except NameError:
+                    print("No url is set")
                 executedCommand = True
         for command in commands:
             if command.matchesParams(params):
