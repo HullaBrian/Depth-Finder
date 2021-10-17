@@ -1,3 +1,5 @@
+import datetime
+
 import packageManager  # makes sure all necessary packages are installed
 import socket
 import urllib3.exceptions
@@ -118,26 +120,29 @@ class getInfo(command):
     def __init__(self):
         super().__init__("get info", ["get", "info"], hlp="gets the relevant information on a given url")
         self.hlp = "give the relevant information on a given url"
+        self.info = []
+        self.expirationDate = 0
 
     def execute(self, filler):
-        info = []
         import whois
         try:
             whois_info = whois.whois(url)
         except Exception:
             print("Invalid url")
             return
-        info.append(bool(whois_info.domain_name))
-        info.append(whois_info.registrar)
-        info.append(whois_info.whois_server)
-        info.append(whois_info.creation_date)
-        info.append(whois_info)
+        self.info.append(bool(whois_info.domain_name))
+        self.info.append(whois_info.registrar)
+        self.info.append(whois_info.whois_server)
+        self.info.append(whois_info.creation_date)
+        self.info.append(whois_info)
 
-        print("Registered: " + str(info[0]))
-        print("Registrar: " + str(info[1]))
-        print("Server: " + str(info[2]))
-        print("Creation date: " + str(info[3]))
-        print("Other info: " + str(info[4]))
+        print("Registered: " + str(self.info[0]))
+        print("Registrar: " + str(self.info[1]))
+        print("Server: " + str(self.info[2]))
+        print("Creation date: " + str(self.info[3]))
+        print("Other info: " + str(self.info[4]))
+
+        self.expirationDate = whois_info.expiration_date
 
 
 class sslverify(command):
@@ -146,19 +151,15 @@ class sslverify(command):
         self.hlp = "verifies the SSL certificate of the url"
 
     def execute(self, filler):
-        import requests
+        import socket
+        import ssl
         try:
-            response = str(requests.get(url))
-            if "SSL: CERTIFICATE_VERIFY_FAILED" in response:
-                print("url \"" + url + "\" has an invalid SSL certificate")
-            else:
-                print("url \"" + url + "\" has a valid SSL certificate")
-        except requests.exceptions.InvalidURL:
-            print("Invalid url \"" + url + "\"")
-        except (socket.gaierror, urllib3.exceptions.NewConnectionError, urllib3.exceptions.MaxRetryError, requests.exceptions.ConnectionError):
-            print("Could not resolve url \"" + url + "\" to host")
-        except requests.exceptions.MissingSchema:
-            print("Invalid url \"" + url + "\"")
+            ctx = ssl.create_default_context()
+            with ctx.wrap_socket(socket.socket(), server_hostname=url) as s:
+                s.connect((url, 443))
+            print(url + " has a VALID SSL certificate")
+        except Exception as e:
+            print(url + " has an INVALID SSL certificate, error:", e)
 
 
 def main():
