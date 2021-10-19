@@ -162,6 +162,25 @@ class sslverify(command):
             print(url + " has an INVALID SSL certificate, error:", e)
 
 
+class isRegistered(command):
+    def __init__(self):
+        super().__init__("get registration", ["get", "registration"], False, "determines whether or not a domain is registered or not")
+        self.hlp = "determines whether or not a domain is registered or not"
+
+    def execute(self, data):
+        import whois
+        try:
+            whois_info = whois.whois(url)
+        except Exception:
+            print("Invalid url")
+            return
+        tmp = bool(whois_info.domain_name)
+        if tmp:
+            print(url + " is a registered domain under " + whois_info.registrar)
+        else:
+            print(url + " is not a registered domain")
+
+
 def main():
     art.tprint("Phishing-Detective")  # we can discuss fonts later, I say we get some of the primary code done before
     # To add a command, simply add a command(command title, required titles) object to commands
@@ -170,6 +189,7 @@ def main():
     commands.append(setUrl())
     commands.append(getInfo())
     commands.append(sslverify())
+    commands.append(isRegistered())
     commands.append(hlp())  # Put the help addition at the end of adding commands to properly generate the help command
 
     while True:  # Loops until exits
