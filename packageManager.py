@@ -17,13 +17,6 @@ except ModuleNotFoundError:
     print("Could not find a required library. Installing...")
     os.system("pip install -U python-whois")
     print("Done!")
-try:
-    import requests
-except ModuleNotFoundError:
-    missingLibrary = True
-    print("Could not find a required library. Installing...")
-    os.system("pip install -U requests")
-    print("Done!")
 
 if missingLibrary:
     print("Restarting to refresh content...")
