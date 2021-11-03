@@ -8,6 +8,7 @@ import art
 
 global url
 global commands
+global whiteListedPorts
 
 
 class hlp(command):
@@ -181,6 +182,25 @@ class isRegistered(command):
             print(url + " is not a registered domain")
 
 
+class getPort(command):
+    def __init__(self):
+        super().__init__("get port", ["get", "port"], hlp="retrieves the port of the url")
+        self.hlp = "retrieves the port of the url"
+
+    def execute(self, filler):
+        try:
+            port = int(url.split(":")[2].split("/")[0])  # Ex. https://google.com:80/ -> ["80/"] -> 80
+        except IndexError:
+            print("Could not find a port number in " + url)
+            return
+        print(url + " runs through port", port)
+
+        if port not in whiteListedPorts:
+            print("Port detected as suspicious")
+        else:
+            print("Port detected as a commonly used port number")
+
+
 def main():
     art.tprint("Phishing-Detective")  # we can discuss fonts later, I say we get some of the primary code done before
     # To add a command, simply add a command(command title, required titles) object to commands
@@ -189,8 +209,12 @@ def main():
     commands.append(setUrl())
     commands.append(getInfo())
     commands.append(sslverify())
+    commands.append(getPort())
     commands.append(isRegistered())
     commands.append(hlp())  # Put the help addition at the end of adding commands to properly generate the help command
+
+    global whiteListedPorts
+    whiteListedPorts = [80, 443]
 
     while True:  # Loops until exits
         prompt = "pd> "
