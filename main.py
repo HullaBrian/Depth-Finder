@@ -5,6 +5,7 @@ import socket
 import urllib3.exceptions
 from command import command
 import art
+import requests
 
 global url
 global commands
@@ -199,6 +200,36 @@ class getPort(command):
             print("Port detected as suspicious")
         else:
             print("Port detected as a commonly used port number")
+
+
+class getScreenShot(command):
+    # https://gist.github.com/DusanMadar/8d11026b7ce0bce6a67f7dd87b999f6b
+    def __init__(self):
+        super().__init__("get screenshot", ["get", "screenshot"], hlp="retrieves a screenshot of a given url using TOR")
+        import requests
+        self.hlp = "retrieves a screenshot of a given url using TOR"
+
+        self.session = self.get_tor_session()
+        if not self.verifySession():
+            print("ERROR: Could not verify TOR session!")
+
+
+    def execute(self, data):
+        import requests
+
+
+    def get_tor_session(self):
+        import requests
+        session = requests.session()
+        # Tor uses the 9050 port as the default socks port
+        session.proxies = {'http':  'socks5://127.0.0.1:9050',
+                           'https': 'socks5://127.0.0.1:9050'}
+        return session
+
+    def verifySession(self):
+        if requests.get("http://httpbin.org/ip").text != self.session.get("http://httpbin.org/ip").text:
+            return True
+        return False
 
 
 def main():
