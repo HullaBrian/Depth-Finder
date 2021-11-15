@@ -215,7 +215,27 @@ class getScreenShot(command):
 
 
     def execute(self, data):
-        import requests
+        from selenium import webdriver
+        from selenium.webdriver.chrome.options import Options
+
+        options = webdriver.ChromeOptions()
+        options.headless = True
+        driver = webdriver.Chrome(options=options)
+
+        driver.get(url)
+
+        url_domain = url.split(".")[0].split(":")[2:]
+
+        S = lambda X: driver.execute_script('return document.body.parentNode.scroll'+X)
+        driver.set_window_size(S('Width'), S('Height'))  # May need manual adjustment
+        driver.find_element_by_tag_name('body').screenshot(f'{url_domain}.png')
+
+        driver.quit()
+
+
+    def downloadChromeDriver(self):
+        import chromedriver_autoinstaller
+        chromedriver_autoinstaller.install()
 
 
     def get_tor_session(self):
