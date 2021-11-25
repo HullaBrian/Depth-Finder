@@ -1,4 +1,5 @@
 # Phishing-Detective
+This branch is for development purposes and is not the most stable version of the application. For the most stable, up-to-date experience, please take a look at the main branch.
 
 Phishing-Detective is a command line application for Windows 10 built to detect a phishing site from one(or two) url's
 
