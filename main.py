@@ -1,6 +1,8 @@
-import datetime
-
 import packageManager  # makes sure all necessary packages are installed
+import installTor
+
+import datetime
+import socks
 import socket
 import urllib3.exceptions
 from command import command
@@ -213,7 +215,6 @@ class getScreenShot(command):
         if not self.verifySession():
             print("ERROR: Could not verify TOR session!")
 
-
     def execute(self, data):
         from selenium import webdriver
         from selenium.webdriver.chrome.options import Options
@@ -232,11 +233,9 @@ class getScreenShot(command):
 
         driver.quit()
 
-
     def downloadChromeDriver(self):
         import chromedriver_autoinstaller
         chromedriver_autoinstaller.install()
-
 
     def get_tor_session(self):
         import requests
@@ -257,12 +256,39 @@ def main():
     # To add a command, simply add a command(command title, required titles) object to commands
     global commands
     commands = []
+    print("Registering commands...", end="")
     commands.append(setUrl())
     commands.append(getInfo())
     commands.append(sslverify())
     commands.append(getPort())
     commands.append(isRegistered())
+
+    # Used for tor related commands
+    try:
+        commands.append(getScreenShot())
+    except ConnectionRefusedError:
+        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+              "Stopping run due to TOR error.")
+        return
+    except socks.ProxyConnectionError:
+        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+              "Stopping run due to TOR error.")
+        return
+    except urllib3.exceptions.NewConnectionError:
+        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+              "Stopping run due to TOR error.")
+        return
+    except urllib3.exceptions.MaxRetryError:
+        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+              "Stopping run due to TOR error.")
+        return
+    except requests.exceptions.ConnectionError:
+        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+              "Stopping run due to TOR error.")
+        return
+
     commands.append(hlp())  # Put the help addition at the end of adding commands to properly generate the help command
+    print("DONE!")
 
     global whiteListedPorts
     whiteListedPorts = [80, 443]
