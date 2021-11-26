@@ -1,11 +1,11 @@
 import os
+import time
 
 import packageManager  # makes sure all necessary packages are installed
 import installTor
 
 import datetime
 import socks
-import socket
 import urllib3.exceptions
 from command import command
 import art
@@ -213,11 +213,24 @@ class getScreenShot(command):
         self.hlp = "retrieves a screenshot of a given url using TOR"
 
     def execute(self, data):
-        self.downloadChromeDriver()
+        os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
+        print("Started tor client.")
 
-        # https://pypi.org/project/webscreenshot/
-        # Use proxy socks5://127.0.0.1:9050
+        from selenium import webdriver
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('--proxy-server=%s' % "socks5://127.0.0.1:9050")
+        chrome_options.add_argument("--headless")
+        chrome_options.add_argument("--window-size=1920,1080")
+        driver = webdriver.Chrome(options=chrome_options)
 
+        driver.get(url)
+        time.sleep(5)
+        print("Taking screenshot...", end="")
+        driver.save_screenshot(os.getcwd().replace("\\", "/")[:os.getcwd().replace("\\", "/").index("/src")] + "/screenshots/{}.png".format(url[url.index("//") + 2:].replace("/", "").replace(".", "")))
+        print("Done!\nScreenshot will be saved under the 'screenshots' folder in the driectory above 'src'.")
+
+        os.system('taskkill /IM "tor.exe" /F')
+        print("Killed tor client.")
 
 def main():
     art.tprint("Phishing-Detective")  # we can discuss fonts later, I say we get some of the primary code done before

@@ -23,10 +23,17 @@ try:
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    os.system("pip install -U requests - q")
+    os.system("pip install -U requests -q")
     print("Done!")
+try:
+    import chromedriver_autoinstaller
 
-# https://pypi.org/project/webscreenshot/
+    chromedriver_autoinstaller.install()
+except ModuleNotFoundError:
+    missingLibrary = True
+    print("Could not find a required library. Installing...", end="")
+    os.system("pip install chromedriver-autoinstaller -q")
+    print("Done!")
 
 if missingLibrary:
     print("Restarting to refresh content...")
