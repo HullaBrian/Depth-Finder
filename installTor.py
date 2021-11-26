@@ -36,16 +36,18 @@ def installTor():
 
         print("Checking to make sure that TOR is installed on your machine in the proper directory...")
         flag = False
-        print("Verification attempt 0/20")
+        print("Verification attempt  0/20", end="")
         for x in range(1, 21):
             if "Tor_Browser" in os.listdir():
-                print("Thank you for installing TOR")
+                print("\nThank you for installing TOR")
                 flag = True
                 break
-            print("\b\b\b\b" + str(x))
+            for y in range(len(str(x))):
+                print("\b", end="")
+            print("\b\b\b" + str(x) + "/20", end="")
             time.sleep(1)
         if not flag:
-            print("FAILED!\nMax reattempts reached. Please try again.")
+            print("\nTor verification FAILED!\nMax reattempts reached. Please try again.")
         else:
             pass
             """

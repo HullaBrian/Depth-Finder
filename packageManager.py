@@ -33,6 +33,13 @@ except ModuleNotFoundError:
     print("Could not find a required library. Installing...", end="")
     os.system("pip install chromedriver-autoinstaller -q")
     print("Done!")
+try:
+    import selenium
+except ModuleNotFoundError:
+    missingLibrary = True
+    print("Could not find a required library. Installing...", end="")
+    os.system("pip install selenium -q")
+    print("Done!")
 
 if missingLibrary:
     print("Restarting to refresh content...")

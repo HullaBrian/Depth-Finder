@@ -1,11 +1,10 @@
 import os
 import time
 
-import selenium.common.exceptions
-
 import packageManager  # makes sure all necessary packages are installed
 import installTor
 
+import selenium.common.exceptions
 import datetime
 import socks
 import urllib3.exceptions
@@ -234,12 +233,15 @@ class getScreenShot(command):
         organization = "null"
         for command in commands:
             if command.title == "get info":
-                organization = command.getInformation().lower()
+                try:
+                    organization = command.getInformation().lower()
+                except AttributeError:
+                    organization = "null"
 
         domain = url[url.index("//") + 2:].split("/")[0]
         from difflib import SequenceMatcher
         if SequenceMatcher(None, organization, domain).ratio() < 0.5:  # If domain and organization are not similar
-            print("Possiblly fraudulant site detected.\nStarting tor client...", end="")
+            print("Possibly fraudulant site detected.\nStarting tor client...", end="")
             os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
             print("Done!")
             print("Applying proxy...", end="")
@@ -255,7 +257,7 @@ class getScreenShot(command):
             x = 0
             while x < 100:
                 try:
-                    tmp = driver.find_element_by_tag_name('pre').text
+                    tmp = driver.find_element('body')
                     break
                 except NoSuchElementException:
                     x += 1
