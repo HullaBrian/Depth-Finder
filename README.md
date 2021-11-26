@@ -1,16 +1,53 @@
 # Phishing-Detective
-Phishing-Detective is a command line application for Windows 10 built to detect a phishing site from one(or two) url's
+Phishing-Detective is a command line application for Windows 10+ (and hopefully Linux) built for the purpose of detecting phishing attempts.
 
 ## How it works
-A simple algorithm is used in order to determine if a URL is possibly a malicious link
-  1. Input the URL of the malicious link in question
-  2. Input a known, safe URL
-  3. Phishing-Detective will pull information about the URL in question
-  4. Phishing-Detective will compare the data of the URL in question with the data of the known safe URL
-  5. Phishing-Detective will give you an evaluation based on the data found
+Phishing-Detective has a variety of tools to assist you in safely finding out whether or not a given url is phishing or not:
+  - Get WHOIS data
+    - Gathers data from WHOIS on the given url and presents it back to you in a convienent dictionary split among multiple lines.
+  - Get the SSL certificate status
+    - Determines if the SSL certificate of the given url is valid or not.
+  - Get the port number of the site
+    - A bit less useful than the other commands, but still useful for beginners.
+    - Splices the given url and retrieves the port number that the url is trying to access.
+  - Get registration
+    - Determines if the given url is registered and, if it is, what organization has registered it.
+  - Get screenshot
+    - The most complex tool to date.
+    - Anonomously browses to the given url using tor, then uses selenium to capture a screenshot of the webpage.
+ 
+## Requirements
+Phishing-Detective requires a few libraries, but don't worry! Phishing-Detective, when run, will verify that all libraries are installed, and install them for you if needed.
+In regards to tor, you will need to do some of the steps yourself, but you will only need to go through the installation process.
+The installer will run for you, and the only thing you need to do is name the directory "Tor_Browser"
+Other than installing tor yourself, you will not need to install anything, but if you do want a list of required libraries:
+  - [art](https://pypi.org/project/art/)
+  - [whois](https://pypi.org/project/python-whois/)
+  - [requests](https://pypi.org/project/requests/)
+  - [chromedriver_autoinstaller](https://pypi.org/project/chromedriver-autoinstaller/)
+  - [selenium](https://pypi.org/project/selenium/)
 
 ## Use
 for a list of usable arguments type 
 ```
 pd> help
+```
+```
+
+help   Displays this menu
+"Set" Commands
+--------------
+	Command            Description
+	-------            -----------
+	set url            sets the url to a given url
+
+"Get" Commands
+--------------
+	Command            Description
+	-------            -----------
+	get info           give the relevant information on a given url
+	get sslverify      verifies the SSL certificate of the url
+	get port           retrieves the port of the url
+	get registration   determines whether or not a domain is registered or not
+	get screenshot     retrieves a screenshot of a given url using TOR
 ```
