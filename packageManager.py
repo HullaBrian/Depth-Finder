@@ -8,14 +8,14 @@ try:
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    os.system("pip install -U art -q")
+    os.system("pip3 install -U art -q")
     print("Done!")
 try:
     import whois
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    os.system("pip install -U python-whois -q")
+    os.system("pip3 install -U python-whois -q")
     print("Done!")
 try:
     import requests
@@ -23,14 +23,7 @@ try:
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    os.system("pip install -U requests -q")
-    print("Done!")
-try:
-    import socks
-except ModuleNotFoundError:
-    missingLibrary = True
-    print("Could not find a required library. Installing...", end="")
-    os.system("pip install -U PySocks -q")
+    os.system("pip3 install -U requests -q")
     print("Done!")
 try:
     import chromedriver_autoinstaller
@@ -38,14 +31,14 @@ try:
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    os.system("pip install chromedriver-autoinstaller -q")
+    os.system("pip3 install -U chromedriver-autoinstaller -q")
     print("Done!")
 try:
     import selenium
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    os.system("pip install selenium -q")
+    os.system("pip3 install -U selenium -q")
     print("Done!")
 
 if missingLibrary:

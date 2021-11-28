@@ -6,7 +6,6 @@ import installTor
 
 import selenium.common.exceptions
 import datetime
-import socks
 import urllib3.exceptions
 from command import command
 import art
@@ -238,15 +237,6 @@ class getScreenShot(command):
         print("Loading url...", end="")
         try:
             driver.get(url)
-            from selenium.common.exceptions import NoSuchElementException
-            x = 0
-            while x < 100:
-                try:
-                    tmp = driver.find_element('body')
-                    break
-                except NoSuchElementException:
-                    x += 1
-                    time.sleep(0.1)
             print("Done!")
         except selenium.common.exceptions.WebDriverException:
             print("Failed to load url.")
@@ -275,10 +265,6 @@ def main():
     try:
         commands.append(getScreenShot())
     except ConnectionRefusedError:
-        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
-              "Stopping run due to TOR error.")
-        return
-    except socks.ProxyConnectionError:
         print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
               "Stopping run due to TOR error.")
         return
