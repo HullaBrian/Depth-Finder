@@ -132,11 +132,11 @@ class getInfo(command):
 
     def execute(self, filler):
         import whois
-        try:
-            whois_info = whois.whois(url)
-        except Exception:
-            print("Invalid url")
-            return
+        #try:
+        whois_info = whois.whois(url)
+        #except Exception:
+        #    print("Invalid url")
+        #    return
         self.info = []
         self.info.append(bool(whois_info.domain_name))
         self.info.append(whois_info.registrar)
@@ -230,25 +230,10 @@ class getScreenShot(command):
         chrome_options.add_argument("--window-size=1920,1080")
         driver = webdriver.Chrome(options=chrome_options)
 
-        organization = "null"
-        for command in commands:
-            if command.title == "get info":
-                try:
-                    organization = command.getInformation().lower()
-                except AttributeError:
-                    organization = "null"
-
-        domain = url[url.index("//") + 2:].split("/")[0]
-        from difflib import SequenceMatcher
-        if SequenceMatcher(None, organization, domain).ratio() < 0.5:  # If domain and organization are not similar
-            print("Possibly fraudulant site detected.\nStarting tor client...", end="")
-            os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
-            print("Done!")
-            print("Applying proxy...", end="")
-            chrome_options.add_argument('--proxy-server=%s' % "socks5://127.0.0.1:9050")  # Use tor proxy
-            print("Done!")
-        else:
-            print("Official site detected.")
+        os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
+        print("Applying proxy...", end="")
+        chrome_options.add_argument('--proxy-server=%s' % "socks5://127.0.0.1:9050")  # Use tor proxy
+        print("Done!")
 
         print("Loading url...", end="")
         try:

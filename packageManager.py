@@ -26,6 +26,13 @@ except ModuleNotFoundError:
     os.system("pip install -U requests -q")
     print("Done!")
 try:
+    import socks
+except ModuleNotFoundError:
+    missingLibrary = True
+    print("Could not find a required library. Installing...", end="")
+    os.system("pip install -U PySocks -q")
+    print("Done!")
+try:
     import chromedriver_autoinstaller
     chromedriver_autoinstaller.install()
 except ModuleNotFoundError:
