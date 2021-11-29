@@ -1,0 +1,15 @@
+{
+  "screenshot": {
+    "width": 1920,
+    "height": 1080
+  },
+  "browser": {
+    "forceTor": true,
+    "proxy": "",
+    "headlessMode": true
+  },
+  "startup": {
+    "verifyLibraries": true,
+    "installTor": true
+  }
+}

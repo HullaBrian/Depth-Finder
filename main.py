@@ -1,8 +1,12 @@
+import json
 import os
 import time
 
-import packageManager  # makes sure all necessary packages are installed
-import installTor
+if bool(json.loads("config.json")["startup"]["verifyLibraries"]):
+    import packageManager  # makes sure all necessary packages are installed
+
+if bool(json.loads("config.json")["startup"]["installTor"]):
+    import installTor  # Installs tor
 
 import selenium.common.exceptions
 import datetime
@@ -14,6 +18,7 @@ import requests
 global url
 global commands
 global whiteListedPorts
+global settings
 
 
 class hlp(command):
@@ -131,11 +136,8 @@ class getInfo(command):
 
     def execute(self, filler):
         import whois
-        #try:
         whois_info = whois.whois(url)
-        #except Exception:
-        #    print("Invalid url")
-        #    return
+
         self.info = []
         self.info.append(bool(whois_info.domain_name))
         self.info.append(whois_info.registrar)
@@ -224,15 +226,26 @@ class getScreenShot(command):
 
     def execute(self, data):
         from selenium import webdriver
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument("--headless")  # Launch headless browser
-        chrome_options.add_argument("--window-size=1920,1080")
-        driver = webdriver.Chrome(options=chrome_options)
+        options = webdriver.ChromeOptions()
+        if settings["browser"]["headlessMode"]:
+            options.add_argument("--headless")  # Launch headless browser
+        options.add_argument(f"--window-size={settings['screenshot']['width']},{settings['screenshot']['height']}")
 
-        os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
-        print("Applying proxy...", end="")
-        chrome_options.add_argument('--proxy-server=%s' % "socks5://127.0.0.1:9050")  # Use tor proxy
-        print("Done!")
+        if settings["browser"]["forceTor"]:
+            os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
+            print("Applying proxy...", end="")
+            if settings["browser"]["proxy"] == "":
+                options.add_argument('--proxy-server=%s' % "socks5://127.0.0.1:9050")  # Use tor proxy
+            else:
+                print("Proxy specified conflict with forceTor setting. Either change the proxy to \"\", or turn off forceTor")
+            print("Done!")
+        else:
+            if settings["browser"]["proxy"] != "":
+                print("Applying proxy...", end="")
+                options.add_argument('--proxy-server=%s' % f"{settings['browser']['proxy']}")  # Use other proxy
+                print("Done!")
+
+        driver = webdriver.Chrome(options=options)
 
         print("Loading url...", end="")
         try:
@@ -260,6 +273,32 @@ def main():
     commands.append(sslverify())
     commands.append(getPort())
     commands.append(isRegistered())
+
+    print("Applying settings from " + os.getcwd() + "/config.json")
+    global settings
+    try:
+        with open("config.json") as config:
+            settings = json.dumps(config)
+    except FileNotFoundError:
+        print("Configuration file not found. Creating new file...", end="")
+        config = open("config.json", "w+")
+        settings = {
+            "screenshot": {
+                "width": 1920,
+                "height": 1080
+            },
+            "browser": {
+                "forceTor": True,
+                "proxy": "socks5://127.0.0.1:9050",
+                "defaultBrowser": "chrome",
+                "headlessMode": True
+            },
+            "startup": {
+                "verifyLibraries": True,
+                "installTor": True
+            }
+        }
+        json.dump(settings, config)
 
     # Used for tor related commands
     try:
