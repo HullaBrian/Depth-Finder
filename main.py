@@ -2,10 +2,10 @@ import json
 import os
 import time
 
-if bool(json.loads("config.json")["startup"]["verifyLibraries"]):
+if bool(json.load(open("config.json"))["startup"]["verifyLibraries"]):
     import packageManager  # makes sure all necessary packages are installed
 
-if bool(json.loads("config.json")["startup"]["installTor"]):
+if bool(json.load(open("config.json"))["startup"]["installTor"]):
     import installTor  # Installs tor
 
 import selenium.common.exceptions

@@ -4,12 +4,12 @@
     "height": 1080
   },
   "browser": {
-    "forceTor": true,
+    "forceTor": false,
     "proxy": "",
     "headlessMode": true
   },
   "startup": {
     "verifyLibraries": true,
-    "installTor": true
+    "installTor": false
   }
 }

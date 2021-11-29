@@ -1,11 +1,7 @@
 import os
+import ssl
 import subprocess
 import time
-
-
-def run(cmd):
-    completed = subprocess.run(["powershell", "-Command", cmd], capture_output=True)
-    return completed
 
 
 def installTor():
@@ -22,9 +18,15 @@ def installTor():
     elif sys.platform.startswith('win32'):
         if "torInstaller.exe" not in os.listdir() and "Tor_Browser" not in os.listdir():
             print("Installing TOR executable...", end="")
-
-            import requests
-            r = requests.get(windowsURL, allow_redirects=True)
+            try:
+                import requests
+            except ModuleNotFoundError:
+                print("Could not find a required library. Please verify all libraries before attempting to install tor.")
+            try:
+                r = requests.get(windowsURL, allow_redirects=True)
+            except requests.exceptions.SSLError and ssl.SSLCertVerificationError:
+                print("Error installing tor browser. Please check that your organization has not blocked tor.")
+                return
             open("torInstaller.exe", "wb").write(r.content)
 
             print("Done!\n[WARNING] In 5 seconds the executable will be run!\nPLEASE COMPLETE THE INSTALLATION PROCESS, INSTALL IT INTO THE CURRENT DIRECTORY, AND NAME THE FOLDER 'Tor_Browser'!")
@@ -32,7 +34,7 @@ def installTor():
 
         if "Tor_Browser" not in os.listdir():
             os.system("start torInstaller.exe")
-            time.sleep(20.0)  # Give user enough time to properly install TOR onto their machine.
+            time.sleep(40.0)  # Give user enough time to properly install TOR onto their machine.
 
         print("Checking to make sure that TOR is installed on your machine in the proper directory...")
         flag = False
@@ -49,11 +51,8 @@ def installTor():
         if not flag:
             print("\nTor verification FAILED!\nMax reattempts reached. Please try again.")
         else:
+            print("\nVerified tor.")
             pass
-            """
-            hashPassword = str(input("Please enter your desired hash password: "))
-            os.system(f"")
-            """
 
 
 installTor()
