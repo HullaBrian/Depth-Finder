@@ -53,9 +53,9 @@ help   Displays this menu
 ```
 ## Customization
 Phishing-Detective offers a few ways to customize it:
-    - Screenshot width and height
-    - Force tor
-    - Proxy
-    - Headless browser
-    - Verify libraries
-    - Install tor
+  - Screenshot width and height
+  - Force tor
+  - Proxy
+  - Headless browser
+  - Verify libraries
+  - Install tor
