@@ -1,4 +1,5 @@
 import os
+import subprocess
 import ssl
 import subprocess
 import time
@@ -33,8 +34,9 @@ def installTor():
             time.sleep(5)
 
         if "Tor_Browser" not in os.listdir():
-            os.system("start torInstaller.exe")
-            time.sleep(40.0)  # Give user enough time to properly install TOR onto their machine.
+            # os.system("start torInstaller.exe")
+            subprocess.run(["start", "torInstaller.exe"])
+            # time.sleep(40.0)  # Give user enough time to properly install TOR onto their machine.
 
         print("Checking to make sure that TOR is installed on your machine in the proper directory...")
         flag = False

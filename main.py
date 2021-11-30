@@ -136,7 +136,11 @@ class getInfo(command):
 
     def execute(self, filler):
         import whois
-        whois_info = whois.whois(url)
+        try:
+            whois_info = whois.whois(url)
+        except NameError:
+            print("Please set a url.")
+            return
 
         self.info = []
         self.info.append(bool(whois_info.domain_name))
@@ -157,6 +161,9 @@ class getInfo(command):
         import whois
         try:
             whois_info = whois.whois(url)
+        except NameError:
+            print("Please set a url.")
+            return
         except Exception:
             print("Invalid url")
             return
@@ -177,6 +184,9 @@ class sslverify(command):
             with ctx.wrap_socket(socket.socket(), server_hostname=url) as s:
                 s.connect((url, 443))
             print(url + " has a VALID SSL certificate")
+        except NameError:
+            print("Please set a url.")
+            return
         except Exception as e:
             print(url + " has an INVALID SSL certificate, error:", e)
 
@@ -190,6 +200,9 @@ class isRegistered(command):
         import whois
         try:
             whois_info = whois.whois(url)
+        except NameError:
+            print("Please set a url.")
+            return
         except Exception:
             print("Invalid url")
             return
@@ -211,6 +224,9 @@ class getPort(command):
         except IndexError:
             print("Could not find a port number in " + url)
             return
+        except NameError:
+            print("Please set a url.")
+            return
         print(url + " runs through port", port)
 
         if port not in whiteListedPorts:
@@ -225,6 +241,12 @@ class getScreenShot(command):
         self.hlp = "retrieves a screenshot of a given url using TOR"
 
     def execute(self, data):
+        try:
+            tmp = url
+            del tmp
+        except NameError:
+            print("Please set a url.")
+            return
         from selenium import webdriver
         options = webdriver.ChromeOptions()
         if settings["browser"]["headlessMode"]:
@@ -253,6 +275,9 @@ class getScreenShot(command):
             print("Done!")
         except selenium.common.exceptions.WebDriverException:
             print("Failed to load url.")
+        except NameError:
+            print("Please set a url.")
+            return
 
         print("Taking screenshot...", end="")
         driver.save_screenshot("screenshots/{}.png".format(url[url.index("//") + 2:].replace("/", "").replace(".", "")))
@@ -273,14 +298,39 @@ def main():
     commands.append(sslverify())
     commands.append(getPort())
     commands.append(isRegistered())
+    print("Done!")
 
-    print("Applying settings from " + os.getcwd() + "/config.json")
+    print("Applying settings from " + os.getcwd() + "\\config.json...", end="")
     global settings
     try:
         with open("config.json") as config:
-            settings = json.dumps(config)
+            settings = json.load(config)
+
+        # Used for tor related commands
+        try:
+            commands.append(getScreenShot())
+        except ConnectionRefusedError:
+            print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+                  "Stopping run due to TOR error.")
+            return
+        except urllib3.exceptions.NewConnectionError:
+            print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+                  "Stopping run due to TOR error.")
+            return
+        except urllib3.exceptions.MaxRetryError:
+            print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+                  "Stopping run due to TOR error.")
+            return
+        except requests.exceptions.ConnectionError:
+            print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
+                  "Stopping run due to TOR error.")
+            return
+
+        commands.append(hlp())  # Put the help command at the end of adding commands to properly generate the help command with access to all commands
+
+        print("DONE!")
     except FileNotFoundError:
-        print("Configuration file not found. Creating new file...", end="")
+        print("Failed!\n\tConfiguration file not found. Creating new file...", end="")
         config = open("config.json", "w+")
         settings = {
             "screenshot": {
@@ -299,29 +349,6 @@ def main():
             }
         }
         json.dump(settings, config)
-
-    # Used for tor related commands
-    try:
-        commands.append(getScreenShot())
-    except ConnectionRefusedError:
-        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
-              "Stopping run due to TOR error.")
-        return
-    except urllib3.exceptions.NewConnectionError:
-        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
-              "Stopping run due to TOR error.")
-        return
-    except urllib3.exceptions.MaxRetryError:
-        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
-              "Stopping run due to TOR error.")
-        return
-    except requests.exceptions.ConnectionError:
-        print("\nError registering a TOR related command. Please verify that TOR is installed properly.\n[WARNING] "
-              "Stopping run due to TOR error.")
-        return
-
-    commands.append(hlp())  # Put the help addition at the end of adding commands to properly generate the help command
-    print("DONE!")
 
     global whiteListedPorts
     whiteListedPorts = [80, 443]
