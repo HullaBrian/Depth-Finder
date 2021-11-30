@@ -28,7 +28,7 @@ Other than installing tor yourself, you will not need to install anything, but i
   - [selenium](https://pypi.org/project/selenium/)
 
 ## Use
-for a list of usable arguments type 
+For a list of usable arguments type 
 ```
 pd> help
 ```
@@ -51,3 +51,11 @@ help   Displays this menu
 	get registration   determines whether or not a domain is registered or not
 	get screenshot     retrieves a screenshot of a given url using TOR
 ```
+## Customization
+Phishing-Detective offers a few ways to customize it:
+    - Screenshot width and height
+    - Force tor
+    - Proxy
+    - Headless browser
+    - Verify libraries
+    - Install tor
