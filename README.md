@@ -17,6 +17,8 @@ Phishing-Detective has a variety of tools to assist you in safely finding out wh
     - Anonomously browses to the given url using tor, then uses selenium to capture a screenshot of the webpage.
  
 ## Requirements
+*Note: Phishing-Detective will only verify and install libraries if you have the "verifyLibraries" configuration set to true in config.json*
+
 Phishing-Detective requires a few libraries, but don't worry! Phishing-Detective, when run, will verify that all libraries are installed, and install them for you if needed.
 In regards to tor, you will need to do some of the steps yourself, but you will only need to go through the installation process.
 The installer will run for you, and the only thing you need to do is name the directory "Tor_Browser"
