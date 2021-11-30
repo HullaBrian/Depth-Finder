@@ -1,5 +1,6 @@
 import json
 import os
+import subprocess
 import time
 
 if bool(json.load(open("config.json"))["startup"]["verifyLibraries"]):
@@ -282,9 +283,11 @@ class getScreenShot(command):
         print("Taking screenshot...", end="")
         driver.save_screenshot("screenshots/{}.png".format(url[url.index("//") + 2:].replace("/", "").replace(".", "")))
         print("Done!\nScreenshot will be saved under the 'screenshots' folder.")
+        driver.quit()
 
-        os.system('taskkill /IM "tor.exe" /F')  # Make sure to end tor
-        print("Killed tor client.")
+        if settings["browser"]["forceTor"]:
+            subprocess.run(["taskkill", "/F", "/IM", '"tor.exe"'.rstrip()])  # Make sure to end tor
+            print("Killed tor client.")
 
 
 def main():
