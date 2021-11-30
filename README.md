@@ -59,4 +59,5 @@ Phishing-Detective offers a few ways to customize it:
   - Headless browser
   - Verify libraries
   - Install tor
+
 You can customize these settings in the config.json file within the directory that main.py is stored in.
