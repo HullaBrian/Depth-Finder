@@ -310,9 +310,14 @@ class getScreenShot(command):
         print("Done!\nScreenshot will be saved under the 'screenshots' folder.")
         driver.quit()
 
-        if settings["browser"]["forceTor"]:
+        if settings["browser"]["forceTor"] and Linux != True:
             subprocess.run(["taskkill", "/F", "/IM", '"tor.exe"'.rstrip()])  # Make sure to end tor
             print("Killed tor client.")
+
+        if Linux == True:
+            print("Stopping Tor Services")
+            os.system("service tor stop")
+            print("Tor Service successfully stopped")
 
 
 def main():
