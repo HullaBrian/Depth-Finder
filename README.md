@@ -55,11 +55,12 @@ help   Displays this menu
 ```
 ## Customization
 Phishing-Detective offers a few ways to customize it:
-  - Screenshot width and height
-  - Force tor
-  - Proxy
-  - Headless browser
-  - Verify libraries
-  - Install tor
+  - Screenshot width and height (Default 1920x1080)
+  - Browser (Default "chrome")
+  - Force tor (Default false)
+  - Proxy (Default "")
+  - Headless browser (Default true)
+  - Verify libraries (Default true)
+  - Install tor (Default false)
 
 You can customize these settings in the config.json file within the directory that main.py is stored in.
