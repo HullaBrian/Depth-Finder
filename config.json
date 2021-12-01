@@ -4,6 +4,7 @@
     "height": 1080
   },
   "browser": {
+    "browser": "chrome",
     "forceTor": false,
     "proxy": "",
     "headlessMode": true

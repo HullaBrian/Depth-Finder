@@ -249,29 +249,46 @@ class getScreenShot(command):
             print("Please set a url.")
             return
         from selenium import webdriver
-        options = webdriver.ChromeOptions()
-        if settings["browser"]["headlessMode"]:
-            options.add_argument("--headless")  # Launch headless browser
-        options.add_argument(f"--window-size={settings['screenshot']['width']},{settings['screenshot']['height']}")
 
-        if settings["browser"]["forceTor"]:
-            os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
-            print("Applying proxy...", end="")
-            if settings["browser"]["proxy"] == "":
-                options.add_argument('--proxy-server=%s' % "socks5://127.0.0.1:9050")  # Use tor proxy
-            else:
-                print("Proxy specified conflict with forceTor setting. Either change the proxy to \"\", or turn off forceTor")
-            print("Done!")
-        else:
-            if settings["browser"]["proxy"] != "":
+        if settings["browser"]["browser"] == "chrome":
+            options = webdriver.ChromeOptions()
+            if settings["browser"]["headlessMode"]:
+                options.add_argument("--headless")  # Launch headless browser
+            # options.add_argument(f"--window-size={settings['screenshot']['width']},{settings['screenshot']['height']}")
+
+            if settings["browser"]["forceTor"]:
+                os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
                 print("Applying proxy...", end="")
-                options.add_argument('--proxy-server=%s' % f"{settings['browser']['proxy']}")  # Use other proxy
+                if settings["browser"]["proxy"] == "":
+                    options.add_argument('--proxy-server=%s' % "socks5://127.0.0.1:9050")  # Use tor proxy
+                else:
+                    print("Proxy specified conflict with forceTor setting. Either change the proxy to \"\", or turn off forceTor")
                 print("Done!")
+            else:
+                if settings["browser"]["proxy"] != "":
+                    print("Applying proxy...", end="")
+                    options.add_argument('--proxy-server=%s' % f"{settings['browser']['proxy']}")  # Use other proxy
+                    print("Done!")
 
-        driver = webdriver.Chrome(options=options)
+            driver = webdriver.Chrome(options=options)
+
+        elif settings["browser"]["browser"] == "firefox":
+            from selenium.webdriver.firefox.options import Options as FirefoxOptions
+
+            options = FirefoxOptions()
+
+            if settings["browser"]["headlessMode"]:
+                options.add_argument("--headless")
+
+            driver = webdriver.Firefox(options=options)
+
+        else:
+            print("Invalid browser selected in config.json. Please change the name of the browser to match and restart the application.")
+            return
 
         print("Loading url...", end="")
         try:
+            driver.set_window_size(settings["screenshot"]["width"], settings["screenshot"]["height"])
             driver.get(url)
             print("Done!")
         except selenium.common.exceptions.WebDriverException:
