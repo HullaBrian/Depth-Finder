@@ -8,7 +8,6 @@ try:
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    # os.system("python -m pip install -U art -q")
     subprocess.run(["python", "-m", "pip", "install", "-U", "art", "-q"])
     print("Done!")
 try:
@@ -17,16 +16,13 @@ except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
     subprocess.run(["python", "-m", "pip", "install", "-U", "python-whois", "-q"])
-    # os.system("python -m pip install -U python-whois -q")
     print("Done!")
 try:
     import requests
-    # os.system("python -m pip install -U requests[socks] -q")
     subprocess.run(["python", "-m", "pip", "install", "-U", "requests[socks]", "-q"])
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    # os.system("python -m pip install -U requests -q")
     subprocess.run(["python", "-m", "pip", "install", "-U", "requests", "-q"])
     print("Done!")
 try:
@@ -35,7 +31,6 @@ try:
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    # os.system("python -m pip install -U chromedriver-autoinstaller -q")
     subprocess.run(["python", "-m", "pip", "install", "-U", "chromedriver-autoinstaller", "-q"])
     print("Done!")
 try:
@@ -43,7 +38,6 @@ try:
 except ModuleNotFoundError:
     missingLibrary = True
     print("Could not find a required library. Installing...", end="")
-    # os.system("python -m pip install -U selenium -q")
     subprocess.run(["python", "-m", "pip", "install", "-U", "selenium", "-q"])
     print("Done!")
 
