@@ -12,8 +12,8 @@ def installTor():
     windowsInstallerName = windowsURL.split("/")[-1]
 
     if sys.platform.startswith('linux'):
-        print("Installing tor browser for Linux")
-        os.system("sudo apt install tor")
+        print("Sorry, but Linux support has not been added yet. Please try again later.")
+        return
         
     elif sys.platform.startswith('win32'):
         if "torInstaller.exe" not in os.listdir() and "Tor_Browser" not in os.listdir():
