@@ -15,6 +15,7 @@ import urllib3.exceptions
 from command import command
 import art
 import requests
+import sys
 
 global url
 global commands
@@ -250,13 +251,20 @@ class getScreenShot(command):
             return
         from selenium import webdriver
 
+        if sys.platform.startswith('linux'):
+            Linux = True
+            print("Starting Tor Service")
+            os.system("service tor start")
+            print("Added proxies can be configured in proxychains.conf file")
+            print("It's also recommended to enable dynamic chains in the proxychains.conf file")
+
         if settings["browser"]["browser"] == "chrome":
             options = webdriver.ChromeOptions()
             if settings["browser"]["headlessMode"]:
                 options.add_argument("--headless")  # Launch headless browser
             # options.add_argument(f"--window-size={settings['screenshot']['width']},{settings['screenshot']['height']}")
 
-            if settings["browser"]["forceTor"]:
+            if settings["browser"]["forceTor"] and Linux != True:
                 os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
                 print("Applying proxy...", end="")
                 if settings["browser"]["proxy"] == "":

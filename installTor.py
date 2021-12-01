@@ -12,7 +12,8 @@ def installTor():
     windowsInstallerName = windowsURL.split("/")[-1]
 
     if sys.platform.startswith('linux'):
-        print("Sorry, but Linux support has not been added yet. Please try again later.")
+        print("Installing Tor")
+        os.system("sudo apt install tor")
         return
         
     elif sys.platform.startswith('win32'):
