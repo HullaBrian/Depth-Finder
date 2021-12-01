@@ -8,14 +8,13 @@ import time
 def installTor():
     import sys
 
-    linuxURL = "https://www.torproject.org/dist/torbrowser/11.0.1/tor-browser-linux64-11.0.1_en-US.tar.xz"
     windowsURL = "https://www.torproject.org/dist/torbrowser/11.0.1/torbrowser-install-win64-11.0.1_en-US.exe"
     windowsInstallerName = windowsURL.split("/")[-1]
 
     if sys.platform.startswith('linux'):
-        print("[ERROR]: Linux support has not been added as of now. Please check later.")
-        # os.system("wget linuxURL")
-        # Make sure to add linux support...
+        print("Installing tor browser for Linux")
+        os.system("sudo apt install tor")
+        
     elif sys.platform.startswith('win32'):
         if "torInstaller.exe" not in os.listdir() and "Tor_Browser" not in os.listdir():
             print("Installing TOR executable...", end="")
