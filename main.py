@@ -251,8 +251,9 @@ class getScreenShot(command):
             return
         from selenium import webdriver
 
+        linux = False
         if sys.platform.startswith('linux'):
-            Linux = True
+            linux = True
             print("Starting Tor Service")
             os.system("service tor start")
             print("Added proxies can be configured in proxychains.conf file")
@@ -264,7 +265,7 @@ class getScreenShot(command):
                 options.add_argument("--headless")  # Launch headless browser
             # options.add_argument(f"--window-size={settings['screenshot']['width']},{settings['screenshot']['height']}")
 
-            if settings["browser"]["forceTor"] and Linux != True:
+            if settings["browser"]["forceTor"] and not linux:
                 os.system("start Tor_Browser/Browser/TorBrowser/Tor/tor.exe")
                 print("Applying proxy...", end="")
                 if settings["browser"]["proxy"] == "":
@@ -310,14 +311,14 @@ class getScreenShot(command):
         print("Done!\nScreenshot will be saved under the 'screenshots' folder.")
         driver.quit()
 
-        if settings["browser"]["forceTor"] and Linux != True:
+        if settings["browser"]["forceTor"] and not linux:
             subprocess.run(["taskkill", "/F", "/IM", '"tor.exe"'.rstrip()])  # Make sure to end tor
             print("Killed tor client.")
 
-        if Linux == True:
-            print("Stopping Tor Services")
+        if linux:
+            print("Stopping Tor Services...")
             os.system("service tor stop")
-            print("Tor Service successfully stopped")
+            print("Tor Service successfully stopped.")
 
 
 def main():

@@ -1,5 +1,4 @@
 import os
-import subprocess
 import ssl
 import subprocess
 import time
@@ -8,15 +7,15 @@ import time
 def installTor():
     import sys
 
-    windowsURL = "https://www.torproject.org/dist/torbrowser/11.0.1/torbrowser-install-win64-11.0.1_en-US.exe"
-    windowsInstallerName = windowsURL.split("/")[-1]
-
     if sys.platform.startswith('linux'):
-        print("Installing Tor")
+        print("Installing Tor...", end="")
         os.system("sudo apt install tor")
+        print("Done!")
         return
-        
+
     elif sys.platform.startswith('win32'):
+        windowsURL = "https://www.torproject.org/dist/torbrowser/11.0.1/torbrowser-install-win64-11.0.1_en-US.exe"
+        windowsInstallerName = windowsURL.split("/")[-1]
         if "torInstaller.exe" not in os.listdir() and "Tor_Browser" not in os.listdir():
             print("Installing TOR executable...", end="")
             try:
