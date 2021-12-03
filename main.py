@@ -388,7 +388,7 @@ def main():
     whiteListedPorts = [80, 443]
 
     while True:  # Loops until exits
-        prompt = "pd> "
+        prompt = "df> "
         print(prompt, end="")
 
         command = input().lower().split(" ")
