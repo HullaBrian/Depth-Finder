@@ -1,8 +1,8 @@
-# Phishing-Detective
+# Depth-Finder
 Phishing-Detective is a command line application for Windows 10+ (and hopefully Linux) built for the purpose of detecting phishing attempts.
 
 ## How it works
-Phishing-Detective has a variety of tools to assist you in safely finding out whether or not a given url is phishing or not:
+Depth-Finder has a variety of tools to assist you in safely finding out whether or not a given url is phishing or not:
   - Get WHOIS data
     - Gathers data from WHOIS on the given url and presents it back to you in a convienent dictionary split among multiple lines.
   - Get the SSL certificate status
@@ -17,9 +17,9 @@ Phishing-Detective has a variety of tools to assist you in safely finding out wh
     - Anonomously browses to the given url using tor, then uses selenium to capture a screenshot of the webpage.
  
 ## Requirements
-*Note: Phishing-Detective will only verify and install libraries if you have the "verifyLibraries" configuration set to true in config.json*
+*Note: Depth-Finder will only verify and install libraries if you have the "verifyLibraries" configuration set to true in config.json*
 
-Phishing-Detective requires a few libraries, but don't worry! Phishing-Detective, when run, will verify that all libraries are installed, and install them for you if needed.
+Depth-Finder requires a few libraries, but don't worry! Phishing-Detective, when run, will verify that all libraries are installed, and install them for you if needed.
 In regards to tor, you will need to do some of the steps yourself, but you will only need to go through the installation process.
 The installer will run for you, and the only thing you need to do is name the directory "Tor_Browser"
 Other than installing tor yourself, you will not need to install anything, but if you do want a list of required libraries:
@@ -54,7 +54,7 @@ help   Displays this menu
 	get screenshot     retrieves a screenshot of a given url using TOR
 ```
 ## Customization
-Phishing-Detective offers a few ways to customize it:
+Depth-Finder offers a few ways to customize it:
   - Screenshot width and height (Default 1920x1080)
   - Browser (Default "chrome")
   - Force tor (Default false)
