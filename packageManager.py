@@ -1,6 +1,5 @@
 import subprocess
 import sys
-import os
 
 if sys.platform.startswith('linux'):
     Linux = True

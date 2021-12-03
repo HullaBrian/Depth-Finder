@@ -322,7 +322,7 @@ class getScreenShot(command):
 
 
 def main():
-    art.tprint("Phishing-Detective")  # we can discuss fonts later, I say we get some of the primary code done before
+    art.tprint("Depth-Finder")  # we can discuss fonts later, I say we get some of the primary code done before
     # To add a command, simply add a command(command title, required titles) object to commands
     global commands
     commands = []

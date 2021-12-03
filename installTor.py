@@ -2,11 +2,10 @@ import os
 import ssl
 import subprocess
 import time
+import sys
 
 
 def installTor():
-    import sys
-
     if sys.platform.startswith('linux'):
         print("Installing Tor...", end="")
         os.system("sudo apt install tor")
