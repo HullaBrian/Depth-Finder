@@ -19,7 +19,7 @@ Depth-Finder has a variety of tools to assist you in safely finding out whether 
 ## Requirements
 *Note: Depth-Finder will only verify and install libraries if you have the "verifyLibraries" configuration set to true in config.json*
 
-Depth-Finder requires a few libraries, but don't worry! Phishing-Detective, when run, will verify that all libraries are installed, and install them for you if needed.
+Depth-Finder requires a few libraries, but don't worry! Depth-Finder, when run, will verify that all libraries are installed, and install them for you if needed.
 In regards to tor, you will need to do some of the steps yourself, but you will only need to go through the installation process.
 The installer will run for you, and the only thing you need to do is name the directory "Tor_Browser"
 Other than installing tor yourself, you will not need to install anything, but if you do want a list of required libraries:
