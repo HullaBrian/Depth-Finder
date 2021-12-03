@@ -372,14 +372,15 @@ def main():
                 "height": 1080
             },
             "browser": {
-                "forceTor": True,
-                "proxy": "socks5://127.0.0.1:9050",
+                "browser": "chrome",
+                "forceTor": False,
+                "proxy": "",
                 "defaultBrowser": "chrome",
                 "headlessMode": True
             },
             "startup": {
                 "verifyLibraries": True,
-                "installTor": True
+                "installTor": False
             }
         }
         json.dump(settings, config)
