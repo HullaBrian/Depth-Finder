@@ -5,7 +5,7 @@ if sys.platform.startswith('linux'):
         print("Depth-Finder does not function in sudo")
         exit()
 
-import jsoni
+import json
 
 import subprocess
 import time
