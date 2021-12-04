@@ -1,5 +1,12 @@
-import json
+import sys
 import os
+if sys.platform.startswith('linux'):
+    if 'SUDO_UID' in os.environ.keys():
+        print("Depth-Finder does not function in sudo")
+        exit()
+
+import jsoni
+
 import subprocess
 import time
 
@@ -15,7 +22,7 @@ import urllib3.exceptions
 from command import command
 import art
 import requests
-import sys
+
 
 global url
 global commands
@@ -307,6 +314,7 @@ class getScreenShot(command):
             return
 
         print("Taking screenshot...", end="")
+        subprocess.run(["mkdir", "screenshots"])
         driver.save_screenshot("screenshots/{}.png".format(url[url.index("//") + 2:].replace("/", "").replace(".", "")))
         print("Done!\nScreenshot will be saved under the 'screenshots' folder.")
         driver.quit()
