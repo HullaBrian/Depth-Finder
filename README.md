@@ -1,5 +1,5 @@
 # Depth-Finder
-Depth-Finder is a command line application for Windows 10+ (and hopefully Linux) built for the purpose of detecting phishing attempts.
+Depth-Finder is a command line application for Windows and Linux built for the purpose of detecting phishing attempts.
 
 ## How it works
 Depth-Finder has a variety of tools to assist you in safely finding out whether or not a given url is phishing or not:
