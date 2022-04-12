@@ -33,27 +33,28 @@ Other than installing tor yourself, you will not need to install anything, but i
 ## Use
 For a list of usable arguments type 
 ```
-pd> help
+df>help
 ```
 ```
+help	Displays this menu
 
-help   Displays this menu
-"Set" Commands
---------------
-	Command            Description
-	-------            -----------
-	set url            sets the url to a given url
+"set" Commands:
+---------------
+	Command    Aliases         Help                           
+	-------    --------          ----
+	set url    []    sets the url to a given url
 
-"Get" Commands
---------------
-	Command            Description
-	-------            -----------
-	get info           give the relevant information on a given url
-	get sslverify      verifies the SSL certificate of the url
-	get port           retrieves the port of the url
-	get registration   determines whether or not a domain is registered or not
-	get screenshot     retrieves a screenshot of a given url using TOR
+"get" Commands:
+---------------
+	Command             Aliases         Help                                                       
+	-------             --------        ----
+	get info            []              give the relevant information on a given url           
+	get sslverify       ['sv']          verifies the SSL certificate of the url                
+	get isRegistered    ['ir', 'iR']    determines whether or not a domain is registered or not
+	get port            ['p', 'P']      retrieves the port of the url                          
+	get ScreenShot      ['SS', 'ss']    retrieves a screenshot of a given url using TOR
 ```
+*Please note: the help menu for the sh3ll library is extremely basic, and often unhelpful as of now. Under further the development (coming soon), the menu should become much more helpful to those using depth-finder.*
 ## Customization
 Depth-Finder offers a few ways to customize it:
   - Screenshot width and height (Default 1920x1080)
