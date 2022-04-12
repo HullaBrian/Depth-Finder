@@ -47,10 +47,13 @@ except ModuleNotFoundError:
     print("Could not find a required library. Installing...", end="")
     subprocess.run([("python" + mod), "-m", "pip", "install", "-U", "selenium", "-q"])
     print("Done!")
+try:
+    from sh3ll import IS
+except ModuleNotFoundError:
+    missingLibrary = True
+    print("Could not find a required library. Installing...", end="")
+    subprocess.run([("python" + mod), "-m", "pip", "install", "-U", "sh3ll", "-q"])
+    print("Done!")
 
-if missingLibrary:
-    print("Restarting to refresh content...")
-    import main
-    exit()
-else:
+if not missingLibrary:
     print("Done!")
