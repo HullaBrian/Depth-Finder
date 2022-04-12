@@ -28,6 +28,7 @@ Other than installing tor yourself, you will not need to install anything, but i
   - [requests](https://pypi.org/project/requests/)
   - [chromedriver_autoinstaller](https://pypi.org/project/chromedriver-autoinstaller/)
   - [selenium](https://pypi.org/project/selenium/)
+  - [sh3ll](https://pypi.org/project/sh3ll/)
 
 ## Use
 For a list of usable arguments type 
