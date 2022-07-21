@@ -18,6 +18,13 @@ except ModuleNotFoundError:
     subprocess.run([("python" + mod), "-m", "pip", "install", "-U", "art", "-q"])
     print("Done!")
 try:
+    import distro
+except ModuleNotFoundError:
+    missingLibrary = True
+    print("Could not find a required library. Installing...", end="")
+    subprocess.run([("python" + mod), "-m", "pip", "install", "-U", "distro", "-q"])
+    print("Done!")
+try:
     import whois
 except ModuleNotFoundError:
     missingLibrary = True
